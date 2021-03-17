@@ -1,0 +1,29 @@
+# Screens
+#:include kv/homescreen.kv
+#:include kv/selectteam.kv
+#:include kv/addteam.kv
+#:include kv/scoresheet.kv
+
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+GridLayout:
+    cols: 1
+    ScreenManager:
+        id: screen_manager
+        transition: NoTransition()
+
+        HomeScreen:
+            name: "home_screen"
+            id: home_screen
+
+        SelectTeam:
+            name: "select_team"
+            id: select_team
+
+        AddTeam:
+            name: "add_team"
+            id: add_team
+
+        ScoreSheet:
+            name: "score_sheet"
+            id: score_sheet
