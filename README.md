@@ -1,6 +1,10 @@
 # FTC_Scouting_App
 
-I'm not yet sure of my full plan for this project. For now it is a side project with the goal of using it as a scouting app for FTC competitions. Actually, This project will actually contain two apps. One as the host and the other for clients. Using Python and Kivy, the client will be compatible with Android, IOS, Windows, MacOS, and Linux (as long as I can reasonably bug test each platform).
+I'm not yet sure of my full plan for this project.
+For now it is a side project with the goal of using it as a scouting app for FTC competitions.
+Actually, This project will actually contain two apps. One as the host and the other for clients.
+Using Python and Kivy, the client will be compatible with Android, IOS, Windows, MacOS, and Linux
+(as long as I can reasonably bug test each platform).
 
 The purpose of the host is:
 ----------------------------
