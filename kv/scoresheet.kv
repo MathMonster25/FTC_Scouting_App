@@ -1,9 +1,34 @@
+#:import hex kivy.utils.get_color_from_hex
+
 <ScoreSheet>:
     GridLayout:
         cols: 1
 
         GridLayout:
+            rows: 1
+            size_hint_y: 0.1
+
+            AnchorLayout:
+                anchor_x: "left"
+
+                Label:
+                    halign: "left"
+                    text: "   Back"
+                    font_size: self.height * 0.8
+                    text_size: self.size
+
+            AnchorLayout:
+                anchor_x: "right"
+
+                Label:
+                    halign: "right"
+                    text: "Team: 00000   "
+                    font_size: self.height * 0.8
+                    text_size: self.size
+
+        GridLayout:
             cols: 2
+            size_hint_y: 0.25
 
             Label:
                 text: "Score: 0"
@@ -13,11 +38,44 @@
         FloatLayout:
             BetterButton:
                 text: "You are at the score sheet screen"
+
                 button_unpressed_color: (0, 255, 255, 0.5)
                 button_pressed_color: (0, 255, 255, 0.2)
                 background_color: self.button_unpressed_color
+
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 size_hint: (0.5, 0.5)
 
                 on_release:
                     app.change_screen("home_screen")
+
+        ScrollView:
+            GridLayout:
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: max(root.height/8, 50)
+                row_force_default: True
+                padding: (5, 5)
+
+                BetterLabel:
+                    markup: True
+                    text: "Autonomous:"
+                    font_size: 25
+                    rect_color_rgba: hex("#008040")
+                    border_color_rgba: (0, 0, 0, 1)
+                    border_thickness: 2
+                BetterLabel:
+                    markup: True
+                    text: "Tele-Op:"
+                    font_size: 25
+                    rect_color_rgba: hex("#008040")
+                    border_color_rgba: (0, 0, 0, 1)
+                    border_thickness: 2
+                BetterLabel:
+                    markup: True
+                    text: "Endgame:"
+                    font_size: 25
+                    rect_color_rgba: hex("#008040")
+                    border_color_rgba: (0, 0, 0, 1)
+                    border_thickness: 2
