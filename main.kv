@@ -4,13 +4,17 @@
 #:include kv/addteam.kv
 #:include kv/scoresheet.kv
 
+# Kivy imports
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 
 GridLayout:
     cols: 1
+
     ScreenManager:
         id: screen_manager
         transition: NoTransition()
+
+        # Add all screens to ScreenManager
 
         HomeScreen:
             name: "home_screen"
