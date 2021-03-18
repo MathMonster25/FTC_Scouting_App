@@ -10,6 +10,20 @@
 GridLayout:
     cols: 1
 
+    MDToolbar:
+        title: "FTC Scouting App"
+        elevation: 10
+        anchor_title: "left"
+        adaptive_height: True
+
+        canvas:
+            Rectangle:
+                source: "icons/ultimate_goal.png"
+
+                # Centers the image with 5 pixel padding on top and bottom
+                size: (((self.size[1]*0.9)/765)*1565, self.size[1]*0.9)
+                pos: ((self.size[0]-(((self.size[1])/765)*1565)), self.pos[1]+(self.size[1]*0.05))
+
     ScreenManager:
         id: screen_manager
         transition: NoTransition()

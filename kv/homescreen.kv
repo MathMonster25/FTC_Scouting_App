@@ -1,16 +1,6 @@
-#:import hex kivy.utils.get_color_from_hex
-
 <HomeScreen>:
-    BetterButton:
+    MDRoundFlatButton:
         text: "You are at the home screen"
-
-        button_unpressed_color: hex("#0000FF")
-        button_pressed_color: hex("000080")
-        background_color: self.button_unpressed_color
-
-        text_unpressed_color: (1, 1, 1)
-        text_pressed_color: (1, 1, 1)
-        color: self.text_unpressed_color
 
         size_hint: (0.5, 0.25)
         pos_hint: {"center_x":0.5, "center_y":0.5}

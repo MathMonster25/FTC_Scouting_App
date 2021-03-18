@@ -1,4 +1,5 @@
 #:import hex kivy.utils.get_color_from_hex
+#:import MDExpansionPanelOneLine kivymd.uix.expansionpanel.MDExpansionPanelOneLine
 
 <ScoreSheet>:
     GridLayout:
@@ -12,10 +13,9 @@
                 anchor_x: "left"
                 padding: (self.width / 50, self.height / 10)
 
-                ImageButton:
-                    image_unpressed: "icons/back_button_unpressed.png"
-                    image_pressed: "icons/back_button_pressed.png"
-                    size_hint: (0.15, 1)
+                MDIconButton:
+                    icon: "arrow-left-drop-circle"
+                    user_font_size: 48
 
                     on_release:
                         app.change_screen("home_screen")
@@ -23,48 +23,56 @@
             AnchorLayout:
                 anchor_x: "right"
 
-                Label:
+                MDLabel:
                     halign: "right"
-                    text: "Team: 00000   "
-                    font_size: self.height * 0.8
-                    #text_size: self.size
+                    text: "Team: 00000"
+                    size: self.texture_size
+                    padding_x: 5
 
-        GridLayout:
+        MDGridLayout:
             cols: 2
-            size_hint_y: 0.25
+            adaptive_height: True
 
-            Label:
+            MDLabel:
                 text: "Score: 0"
-            Button:
+                halign: "center"
+
+            MDFlatButton:
                 text: "Reset"
+                halign: "center"
 
         ScrollView:
-            GridLayout:
+            MDGridLayout:
+                id: scoring_menu
+
                 cols: 1
-                size_hint_y: None
-                height: self.minimum_height
-                row_default_height: max(root.height/8, 50)
-                row_force_default: True
+                adaptive_height: True
                 padding: (5, 5)
 
-                BetterLabel:
-                    markup: True
-                    text: "Autonomous:"
-                    font_size: 25
-                    rect_color_rgba: hex("#008040")
-                    border_color_rgba: (0, 0, 0, 1)
-                    border_thickness: 2
-                BetterLabel:
-                    markup: True
-                    text: "Tele-Op:"
-                    font_size: 25
-                    rect_color_rgba: hex("#008040")
-                    border_color_rgba: (0, 0, 0, 1)
-                    border_thickness: 2
-                BetterLabel:
-                    markup: True
-                    text: "Endgame:"
-                    font_size: 25
-                    rect_color_rgba: hex("#008040")
-                    border_color_rgba: (0, 0, 0, 1)
-                    border_thickness: 2
+<AutonomousDropDown>
+    adaptive_height: True
+    orientation: "vertical"
+
+    MDLabel:
+        text: "Power Shots"
+    MDLabel:
+        text: "Wobbles Delivered"
+
+<TeleOpDropDown>
+    adaptive_height: True
+    orientation: "vertical"
+
+    MDLabel:
+        text: "High Goal Shots"
+        md_bg_color:
+    MDLabel:
+        text: "Middle Goal Shots"
+    MDLabel:
+        text: "Low Goal Shots"
+
+<EndgameDropDown>
+    adaptive_height: True
+    orientation: "vertical"
+
+    MDLabel:
+        text: "Wobbles Delivered"

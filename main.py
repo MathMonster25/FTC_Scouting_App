@@ -3,14 +3,21 @@ import os
 # When commented out, debug lines get printed
 #os.environ["KIVY_NO_CONSOLELOG"] = "1"
 import kivy
-from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.image import Image
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.button import Button
 from kivy.properties import ListProperty, BooleanProperty, NumericProperty, StringProperty
 from kivy.uix.label import Label
 from kivy.graphics import Rectangle, Color
+from kivy.core.window import Window
+
+from kivymd.uix.screen import MDScreen
+from kivymd.app import MDApp
+from kivymd.theming import ThemableBehavior
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
+from kivymd.uix.toolbar import MDToolbar
 
 # Ensures compatibility with app if compiled on another computer
 kivy.require("2.0.0")
@@ -126,23 +133,54 @@ class BetterLabel(Label):
         self.rect.pos = (self.pos[0] + self.border_thickness, self.pos[1] + self.border_thickness)
         self.rect.size = (self.size[0] - self.border_thickness, self.size[1] - self.border_thickness)
 
-class HomeScreen(Screen):
-    def on_enter(self, *args):
-        super().on_enter(*args)
-
-class SelectTeam(Screen):
+class HomeScreen(MDScreen):
     pass
 
-class AddTeam(Screen):
+class SelectTeam(MDScreen):
     pass
 
-class ScoreSheet(Screen):
+class AddTeam(MDScreen):
     pass
 
-class MainApp(App):
+class ScoreSheet(MDScreen):
+    pass
+
+class AutonomousDropDown(MDBoxLayout):
+    title="Autonomous:"
+
+class TeleOpDropDown(MDBoxLayout):
+    title="Tele-Op:"
+
+class EndgameDropDown(MDBoxLayout):
+    title="Endgame:"
+
+class MainApp(MDApp):
+    is_ios = BooleanProperty(ThemableBehavior.device_ios)
+
     def build(self):
+        # Theming
+
+        self.theme_cls.theme_style = "Light"
+
+        self.theme_cls.primary_palette = "Gray"
+        self.theme_cls.primary_hue = "900"
+
+        self.theme_cls.accent_palette = "Lime"
+        self.theme_cls.accent_hue = "A700"
+
         # Load the main kv file, which contains a screen manager for all kv screens
         return Builder.load_file("main.kv")
+
+    def on_start(self):
+        scoring_dropdowns = [AutonomousDropDown(), TeleOpDropDown(), EndgameDropDown()]
+        for dropdown in scoring_dropdowns:
+            self.root.ids.score_sheet.ids.scoring_menu.add_widget(
+                MDExpansionPanel(
+                    icon="",
+                    content=dropdown,
+                    panel_cls=MDExpansionPanelOneLine(text=dropdown.title)
+                )
+            )
 
     def change_screen(self, screen_name: str, direction:str ="left"):
         """
