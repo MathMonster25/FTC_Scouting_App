@@ -2,8 +2,12 @@
     MDRoundFlatButton:
         text: "You are at the select team screen"
 
-        size_hint: (0.5, 0.5)
-        pos_hint: {"center_x":0.5, "center_y":0.5}
+        size_hint: (0.5, 0.25)
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        text_color: app.theme_cls.secondary_text_color
+        line_color: app.theme_cls.accent_color
+        line_width: 5
 
         on_release:
             app.change_screen("add_team")
