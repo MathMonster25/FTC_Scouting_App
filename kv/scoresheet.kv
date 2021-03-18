@@ -10,12 +10,15 @@
 
             AnchorLayout:
                 anchor_x: "left"
+                padding: (self.width / 50, self.height / 10)
 
-                Label:
-                    halign: "left"
-                    text: "   Back"
-                    font_size: self.height * 0.8
-                    text_size: self.size
+                ImageButton:
+                    image_unpressed: "icons/back_button_unpressed.png"
+                    image_pressed: "icons/back_button_pressed.png"
+                    size_hint: (0.15, 1)
+
+                    on_release:
+                        app.change_screen("home_screen")
 
             AnchorLayout:
                 anchor_x: "right"
@@ -24,7 +27,7 @@
                     halign: "right"
                     text: "Team: 00000   "
                     font_size: self.height * 0.8
-                    text_size: self.size
+                    #text_size: self.size
 
         GridLayout:
             cols: 2
@@ -34,20 +37,6 @@
                 text: "Score: 0"
             Button:
                 text: "Reset"
-
-        FloatLayout:
-            BetterButton:
-                text: "You are at the score sheet screen"
-
-                button_unpressed_color: (0, 255, 255, 0.5)
-                button_pressed_color: (0, 255, 255, 0.2)
-                background_color: self.button_unpressed_color
-
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                size_hint: (0.5, 0.5)
-
-                on_release:
-                    app.change_screen("home_screen")
 
         ScrollView:
             GridLayout:

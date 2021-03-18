@@ -5,9 +5,10 @@ import os
 import kivy
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.image import Image
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.button import Button
-from kivy.properties import ListProperty, BooleanProperty, NumericProperty
+from kivy.properties import ListProperty, BooleanProperty, NumericProperty, StringProperty
 from kivy.uix.label import Label
 from kivy.graphics import Rectangle, Color
 
@@ -52,6 +53,47 @@ class BetterButton(Button):
         super()._do_release(*args)
         self.b_state = False
         self.do_release()
+
+class ImageButton(BetterButton):
+
+    image_unpressed = StringProperty()
+    image_pressed = StringProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.background_normal = ""
+        self.background_down = ""
+        self.text_unpressed_color = (0, 0, 0, 0)
+        self.text_pressed_color = (0, 0, 0, 0)
+        self.color = (0, 0, 0, 0)
+        self.button_unpressed_color = (0, 0, 0, 0)
+        self.button_pressed_color = (0, 0, 0, 0)
+        self.background_color = (0, 0, 0, 0)
+
+        self.image = Image(source = "", pos = self.pos)
+        self.image.allow_stretch = True
+        self.image.keep_ratio = False
+        self.add_widget(self.image)
+        self.bind(image_unpressed=self.create_image, pos=self.update_pos, size=self.update_pos)
+
+    def create_image(self, *args):
+        if not self.b_state:
+            self.image.source = self.image_unpressed
+        else:
+            self.image.source = self.image_pressed
+
+        self.image.pos = self.pos
+
+    def update_pos(self, *args):
+        self.image.pos = self.pos
+        self.image.size = self.size
+
+    def do_press(self):
+        self.image.source = self.image_pressed
+
+    def do_release(self):
+        self.image.source = self.image_unpressed
 
 class BetterLabel(Label):
 
