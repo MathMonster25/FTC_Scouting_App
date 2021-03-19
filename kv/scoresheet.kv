@@ -1,13 +1,13 @@
 #:import hex kivy.utils.get_color_from_hex
-#:import MDExpansionPanelOneLine kivymd.uix.expansionpanel.MDExpansionPanelOneLine
 
 <ScoreSheet>:
-    GridLayout:
-        cols: 1
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint_y: 1 - app.getToolbarHeight()/root.height
 
-        GridLayout:
+        MDGridLayout:
             rows: 1
-            size_hint_y: 0.1
+            adaptive_height: True
 
             AnchorLayout:
                 anchor_x: "left"

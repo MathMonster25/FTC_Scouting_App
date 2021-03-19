@@ -1,5 +1,3 @@
-from time import time
-import os
 # When commented out, debug lines get printed
 #os.environ["KIVY_NO_CONSOLELOG"] = "1"
 import kivy
@@ -10,14 +8,12 @@ from kivy.uix.button import Button
 from kivy.properties import ListProperty, BooleanProperty, NumericProperty, StringProperty
 from kivy.uix.label import Label
 from kivy.graphics import Rectangle, Color
-from kivy.core.window import Window
 
-from kivymd.uix.screen import MDScreen
-from kivymd.app import MDApp
-from kivymd.theming import ThemableBehavior
-from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
-from kivymd.uix.toolbar import MDToolbar
+from kivymd_sources.uix import MDScreen
+from kivymd_sources.app import MDApp
+from kivymd_sources.theming import ThemableBehavior
+from kivymd_sources.uix import MDBoxLayout
+from kivymd_sources.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 
 # Ensures compatibility with app if compiled on another computer
 kivy.require("2.0.0")
@@ -156,6 +152,7 @@ class EndgameDropDown(MDBoxLayout):
 
 class MainApp(MDApp):
     is_ios = BooleanProperty(ThemableBehavior.device_ios)
+    started = False
 
     def build(self):
         # Theming
@@ -182,6 +179,8 @@ class MainApp(MDApp):
                 )
             )
 
+        self.started = True
+
     def change_screen(self, screen_name: str, direction:str ="left"):
         """
         Transitions from current screen to new screen
@@ -195,6 +194,12 @@ class MainApp(MDApp):
         # Transition using the given direction
         screen_manager.transition.direction = direction
         screen_manager.current = screen_name
+
+    def getToolbarHeight(self):
+        if self.started:
+            return self.root.ids.toolbar.height
+        else:
+            return 0
 
 if __name__ == "__main__":
     # Start the app
