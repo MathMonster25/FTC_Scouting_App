@@ -9,11 +9,11 @@ from kivy.properties import ListProperty, BooleanProperty, NumericProperty, Stri
 from kivy.uix.label import Label
 from kivy.graphics import Rectangle, Color
 
-from kivymd_sources.uix import MDScreen
-from kivymd_sources.app import MDApp
-from kivymd_sources.theming import ThemableBehavior
-from kivymd_sources.uix import MDBoxLayout
-from kivymd_sources.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
+from kivymd.uix.screen import MDScreen
+from kivymd.app import MDApp
+from kivymd.theming import ThemableBehavior
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 
 # Ensures compatibility with app if compiled on another computer
 kivy.require("2.0.0")
