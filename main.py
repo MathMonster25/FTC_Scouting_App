@@ -1,11 +1,11 @@
 import os
 # When commented out, debug lines get printed
 #os.environ["KIVY_NO_CONSOLELOG"] = "1"
+
 # Allows compiling for ios
-is_ios = True
-if is_ios:
-    xyz = os.path.join('~', 'Documents', 'your_directory')
-    os.environ["PYTHON_EGG_CACHE"] = os.path.expanduser(xyz)
+xyz = os.path.join('~', 'Documents', 'your_directory')
+os.environ["PYTHON_EGG_CACHE"] = os.path.expanduser(xyz)
+
 import kivy
 from kivy.lang import Builder
 from kivy.uix.image import Image
