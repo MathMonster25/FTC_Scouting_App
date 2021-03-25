@@ -2,12 +2,23 @@
     MDRoundFlatButton:
         text: "You are at the select team screen"
 
-        size_hint: (0.5, 0.25)
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
         text_color: app.theme_cls.secondary_text_color
         line_color: app.theme_cls.accent_color
-        line_width: dp(5)
+        line_width: "5sp"
+
+        pos_hint: {"center_x": 0.5, "center_y": 0.666}
 
         on_release:
             app.change_screen("add_team")
+
+    MDRoundFlatButton:
+        text: "Go to the score sheet"
+
+        text_color: app.theme_cls.secondary_text_color
+        line_color: app.theme_cls.accent_color
+        line_width: "5sp"
+
+        pos_hint: {"center_x": 0.5, "center_y": 0.333}
+
+        on_release:
+            app.change_screen("score_sheet")

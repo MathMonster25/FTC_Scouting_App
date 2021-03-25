@@ -7,26 +7,40 @@
 # Kivy imports
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 
-GridLayout:
-    cols: 1
+MDBoxLayout:
     id: main
     name: "main"
 
-    MDToolbar:
-        id: toolbar
+    orientation: "vertical"
 
-        title: "FTC Scouting App"
-        elevation: 10
-        anchor_title: "left"
-        adaptive_height: True
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint_y: 0.16
 
-        canvas:
+        canvas.after:
             Rectangle:
                 source: "icons/ultimate_goal.png"
 
                 # Centers the image with padding on top and bottom
-                size: (((self.size[1]*0.9)/765)*1565, self.size[1]*0.9)
-                pos: ((self.size[0]-(((self.size[1])/765)*1565)), self.pos[1]+(self.size[1]*0.05))
+                size: (((self.size[1]*1)/105)*108, self.size[1]*1)
+                pos: ((self.size[0]-(((self.size[1]*0.9)/105)*108)), self.pos[1]+(self.size[1]*0.1))
+
+        MDToolbar:
+            id: toolbar1
+
+            elevation: 0
+            size_hint_y: 0.5
+
+            left_action_items: [["menu"]]
+
+        MDToolbar:
+            id: toolbar2
+
+            title: "FTC Scouting"
+            anchor_title: "center"
+
+            elevation: 10
+            size_hint_y: 0.5
 
     ScreenManager:
         id: screen_manager

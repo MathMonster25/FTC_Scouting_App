@@ -3,77 +3,68 @@
 <ScoreSheet>:
     MDBoxLayout:
         orientation: "vertical"
-        size_hint_y: 1 - app.getToolbarHeight()/root.height
 
-        MDGridLayout:
-            rows: 1
-            adaptive_height: True
+        MDLabel:
+            text: "Team: 00000"
+            halign: "center"
 
-            AnchorLayout:
-                anchor_x: "left"
-                padding: (self.width / 50, self.height / 10)
+            size_hint_y: 0.07
+            padding_x: sp(5)
 
-                MDIconButton:
-                    icon: "arrow-left-bold-circle"
-                    user_font_size: dp(48)
-                    theme_text_color: "Custom"
-                    text_color: app.theme_cls.accent_color
-
-                    on_release:
-                        app.change_screen("home_screen")
-
-            AnchorLayout:
-                anchor_x: "right"
-
-                MDLabel:
-                    halign: "right"
-                    text: "Team: 00000"
-                    size: self.texture_size
-                    padding_x: dp(5)
-
-        MDGridLayout:
-            cols: 2
+        MDBoxLayout:
+            orientation: "horizontal"
             adaptive_height: True
 
             MDLabel:
+                id: score
+
                 text: "Score: 0"
                 halign: "center"
 
             MDFlatButton:
                 text: "Reset"
-                halign: "center"
+                width: 0.5 * root.width
 
         ScrollView:
-            MDGridLayout:
+            MDBoxLayout:
                 id: scoring_menu
 
-                cols: 1
+                orientation: "vertical"
                 adaptive_height: True
-                padding: (dp(5), dp(5))
 
 <AutonomousDropDown>
-    adaptive_height: True
     orientation: "vertical"
+    adaptive_height: True
 
     MDLabel:
         text: "Power Shots"
+        adaptive_size: True
     MDLabel:
         text: "Wobbles Delivered"
+        adaptive_size: True
+    MDIconButton:
+        icon: "backspace"
+        user_font_size: 48
+        adaptive_size: True
 
 <TeleOpDropDown>
-    adaptive_height: True
     orientation: "vertical"
+    adaptive_height: True
 
     MDLabel:
         text: "High Goal Shots"
+        adaptive_size: True
     MDLabel:
         text: "Middle Goal Shots"
+        adaptive_size: True
     MDLabel:
         text: "Low Goal Shots"
+        adaptive_size: True
 
 <EndgameDropDown>
-    adaptive_height: True
     orientation: "vertical"
+    adaptive_height: True
 
     MDLabel:
         text: "Wobbles Delivered"
+        adaptive_size: True

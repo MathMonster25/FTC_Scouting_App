@@ -14,6 +14,10 @@ from kivy.uix.button import Button
 from kivy.properties import ListProperty, BooleanProperty, NumericProperty, StringProperty
 from kivy.uix.label import Label
 from kivy.graphics import Rectangle, Color
+from kivy.core.window import Window
+from kivy.metrics import inch
+
+Window.size = (inch(828/326)*1.15, inch(1792/326)*1.15)
 
 from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
@@ -159,11 +163,12 @@ class EndgameDropDown(MDBoxLayout):
 class MainApp(MDApp):
     is_ios = BooleanProperty(ThemableBehavior.device_ios)
     started = False
+    prev_screens = []
 
     def build(self):
         # Theming
 
-        self.theme_cls.theme_style = "Light"
+        self.theme_cls.theme_style = "Dark"
 
         self.theme_cls.primary_palette = "Gray"
         self.theme_cls.primary_hue = "900"
@@ -185,6 +190,8 @@ class MainApp(MDApp):
                 )
             )
 
+        self.root.ids.toolbar2.ids.label_title.font_size = "24sp"
+
         self.started = True
 
     def change_screen(self, screen_name: str, direction:str ="left"):
@@ -196,14 +203,43 @@ class MainApp(MDApp):
 
         # Get the screen manager from the kv file
         screen_manager = self.root.ids['screen_manager'] # type: ScreenManager
+        if screen_name != "home_screen":
+            self.prev_screens.append(screen_manager.current)
+        else:
+            self.prev_screens = []
 
         # Transition using the given direction
         screen_manager.transition.direction = direction
         screen_manager.current = screen_name
 
+        if screen_name != "home_screen":
+            self.root.ids.toolbar1.left_action_items = [["arrow-left-bold-circle", lambda x: self.move_back_screen()]]
+        else:
+            self.root.ids.toolbar1.left_action_items = [["menu"]]
+
+    def move_back_screen(self):
+        """
+        Transitions from current screen to the previous screen
+        """
+
+        screen_name = self.prev_screens[-1]
+        self.prev_screens.pop(-1)
+
+        # Get the screen manager from the kv file
+        screen_manager = self.root.ids['screen_manager']  # type: ScreenManager
+
+        # Transition using the given direction
+        screen_manager.transition.direction = "right"
+        screen_manager.current = screen_name
+
+        if screen_name != "home_screen":
+            self.root.ids.toolbar1.left_action_items = [["arrow-left-bold-circle", lambda x: self.move_back_screen()]]
+        else:
+            self.root.ids.toolbar1.left_action_items = [["menu"]]
+
     def getToolbarHeight(self):
         if self.started:
-            return self.root.ids.toolbar.height
+            return self.root.ids.toolbar1.height + self.root.ids.toolbar2.height
         else:
             return 0
 

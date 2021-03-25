@@ -1,12 +1,10 @@
 <HomeScreen>:
     MDFillRoundFlatButton:
         text: "You are at the home screen"
-
-        size_hint: (0.5, 0.25)
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-        font_size: dp(25)
-        text_color: app.theme_cls.secondary_text_color
+        font_size: "16sp"
+        text_color: app.theme_cls.opposite_secondary_text_color
         md_bg_color: app.theme_cls.accent_color
 
         on_release:

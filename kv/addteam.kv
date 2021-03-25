@@ -1,12 +1,11 @@
 <AddTeam>:
-    MDFillRoundFlatButton:
-        text: "You are at the add team screen"
+    MDBoxLayout:
+        orientation: "vertical"
 
-        size_hint: (0.5, 0.25)
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        MDLabel:
+            text: "You are at the add team screen"
+            halign: "center"
 
-        text_color: app.theme_cls.secondary_text_color
-        md_bg_color: app.theme_cls.accent_color
+            text_color: app.theme_cls.secondary_text_color
 
-        on_release:
-            app.change_screen("score_sheet")
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
