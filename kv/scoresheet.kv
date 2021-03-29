@@ -25,46 +25,14 @@
                 text: "Reset"
                 width: 0.5 * root.width
 
+                on_press:
+                    app.resetScore()
+
         ScrollView:
+            id: scroll_view
+
             MDBoxLayout:
                 id: scoring_menu
 
                 orientation: "vertical"
                 adaptive_height: True
-
-<AutonomousDropDown>
-    orientation: "vertical"
-    adaptive_height: True
-
-    MDLabel:
-        text: "Power Shots"
-        adaptive_size: True
-    MDLabel:
-        text: "Wobbles Delivered"
-        adaptive_size: True
-    MDIconButton:
-        icon: "backspace"
-        user_font_size: 48
-        adaptive_size: True
-
-<TeleOpDropDown>
-    orientation: "vertical"
-    adaptive_height: True
-
-    MDLabel:
-        text: "High Goal Shots"
-        adaptive_size: True
-    MDLabel:
-        text: "Middle Goal Shots"
-        adaptive_size: True
-    MDLabel:
-        text: "Low Goal Shots"
-        adaptive_size: True
-
-<EndgameDropDown>
-    orientation: "vertical"
-    adaptive_height: True
-
-    MDLabel:
-        text: "Wobbles Delivered"
-        adaptive_size: True
