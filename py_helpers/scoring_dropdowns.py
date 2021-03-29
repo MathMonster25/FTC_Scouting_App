@@ -97,3 +97,21 @@ class EndgameDropDown(MDBoxLayout):
         self.wobble_rings = IncrementValue(app)
         self.wobble_rings.text = "Rings on Wobbles"
         self.add_widget(self.wobble_rings)
+
+class PenaltiesDropDown(MDBoxLayout):
+    title="Penalties:"
+
+    def __init__(self, app, **kwargs):
+        super().__init__(**kwargs)
+        self.app = app
+
+        self.orientation = "vertical"
+        self.adaptive_height = True
+
+        self.minors = IncrementValue(app)
+        self.minors.text = "Minor Penalties"
+        self.add_widget(self.minors)
+
+        self.majors = IncrementValue(app)
+        self.majors.text = "Major Penalties"
+        self.add_widget(self.majors)

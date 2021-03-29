@@ -1,4 +1,4 @@
-from kivy.properties import StringProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -7,8 +7,9 @@ class IncrementValue(MDBoxLayout):
 
     text = StringProperty()
     value = NumericProperty(0)
+    app = ObjectProperty()
 
-    def __init__(self, app, **kwargs):
+    def __init__(self, app=None, **kwargs):
         super().__init__(**kwargs)
         self.app = app
 
@@ -41,7 +42,8 @@ class IncrementValue(MDBoxLayout):
 
     def changeValue(self, *args):
         self.valueLabel.text = str(self.value)
-        self.app.update_score()
+        if self.app is not None:
+            self.app.update_score()
 
     def add(self):
         self.value += 1

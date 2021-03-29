@@ -15,7 +15,7 @@ from kivy.core.window import Window
 from kivy.metrics import inch
 
 # Set window size to approx. size of iPhone XR (specific to Asus ROG G14 screen)
-Window.size = (inch(828/326)*1.15, inch(1792/326)*1.15)
+#Window.size = (inch(828/326)*1.15, inch(1792/326)*1.15)
 
 # KivyMD imports
 from kivymd.app import MDApp
@@ -61,6 +61,8 @@ class MainApp(MDApp):
         self.autonomous = AutonomousDropDown(self)
         self.teleop = TeleOpDropDown(self)
         self.endgame = EndgameDropDown(self)
+        self.penalties = PenaltiesDropDown(self)
+
         scoring_dropdowns = [self.autonomous, self.teleop, self.endgame]
         for dropdown in scoring_dropdowns:
             panel = MDExpansionPanel(
@@ -70,6 +72,14 @@ class MainApp(MDApp):
                 )
             panel.bind(_state=self.rescroll)
             self.root.ids.score_sheet.ids.scoring_menu.add_widget(panel)
+
+        penalty_panel = MDExpansionPanel(
+            icon = "",
+            content = self.penalties,
+            panel_cls = MDExpansionPanelOneLine(text=self.penalties.title)
+        )
+        penalty_panel.bind(_state=self.rescroll)
+        self.root.ids.score_sheet.ids.penalties_menu.add_widget(penalty_panel)
 
         self.root.ids.toolbar2.ids.label_title.font_size = "24sp"
 
@@ -162,6 +172,12 @@ class MainApp(MDApp):
                 end.wobble_rings.value * 5
         )
 
+        pen = self.penalties # type: PenaltiesDropDown
+        self.score -= (
+            pen.minors.value * 10 +
+            pen.majors.value * 30
+        )
+
         self.root.ids.score_sheet.ids.score.text = "Score: " + str(self.score)
 
     def resetScore(self, *args):
@@ -190,11 +206,17 @@ class MainApp(MDApp):
         end.wobbles_start.reset()
         end.wobble_rings.reset()
 
+        pen = self.penalties # type: PenaltiesDropDown
+        pen.minors.reset()
+        pen.majors.reset()
+
     def getToolbarHeight(self):
         if self.started:
             return self.root.ids.toolbar1.height + self.root.ids.toolbar2.height
         else:
             return 0
+
+
 
 if __name__ == "__main__":
     # Start the app
