@@ -210,6 +210,9 @@ class MainApp(MDApp):
         pen.minors.reset()
         pen.majors.reset()
 
+        self.score = 0
+        self.root.ids.score_sheet.ids.score.text = "Score: " + str(self.score)
+
     def getToolbarHeight(self):
         if self.started:
             return self.root.ids.toolbar1.height + self.root.ids.toolbar2.height
