@@ -3,20 +3,15 @@ from kivy.uix.anchorlayout import AnchorLayout
 
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.label import MDLabel, MDIcon
-from kivymd.uix.boxlayout import MDBoxLayout
 
-class SingleCheckValue(MDBoxLayout):
+from py_helpers.ScoringValue import ScoringValue
 
-    text = StringProperty()
+class SingleCheckValue(ScoringValue):
+
     value = BooleanProperty(False)
 
     def __init__(self, app, **kwargs):
-        super().__init__(**kwargs)
-        self.app = app
-
-        self.orientation = "horizontal"
-        self.padding = (5, 0)
-        self.adaptive_height = True
+        super().__init__(app, **kwargs)
 
         self.label = MDLabel()
         self.label.halign = "center"
@@ -45,19 +40,13 @@ class SingleCheckValue(MDBoxLayout):
     def reset(self):
         self.check.active = False
 
-class DoubleCheckValue(MDBoxLayout):
+class DoubleCheckValue(ScoringValue):
 
-    text = StringProperty()
     value1 = BooleanProperty(False)
     value2 = BooleanProperty(False)
 
     def __init__(self, app, **kwargs):
-        super().__init__(**kwargs)
-        self.app = app
-
-        self.orientation = "horizontal"
-        self.padding = (5, 0)
-        self.adaptive_height = True
+        super().__init__(app, **kwargs)
 
         self.label = MDLabel()
         self.label.halign = "center"
@@ -88,20 +77,14 @@ class DoubleCheckValue(MDBoxLayout):
         self.check1.active = False
         self.check2.active = False
 
-class TripleCheckValue(MDBoxLayout):
+class TripleCheckValue(ScoringValue):
 
-    text = StringProperty()
     value1 = BooleanProperty(False)
     value2 = BooleanProperty(False)
     value3 = BooleanProperty(False)
 
     def __init__(self, app, **kwargs):
-        super().__init__(**kwargs)
-        self.app = app
-
-        self.orientation = "horizontal"
-        self.padding = (5, 0)
-        self.adaptive_height = True
+        super().__init__(app, **kwargs)
 
         self.label = MDLabel()
         self.label.halign = "center"

@@ -1,7 +1,7 @@
 # Screens
 #:include kv/homescreen.kv
-#:include kv/selectteam.kv
-#:include kv/addteam.kv
+#:include kv/selectmatch.kv
+#:include kv/addmatch.kv
 #:include kv/scoresheet.kv
 
 # Kivy imports
@@ -52,13 +52,13 @@ MDBoxLayout:
             name: "home_screen"
             id: home_screen
 
-        SelectTeam:
-            name: "select_team"
-            id: select_team
+        SelectMatch:
+            name: "select_match"
+            id: select_match
 
-        AddTeam:
-            name: "add_team"
-            id: add_team
+        AddMatch:
+            name: "add_match"
+            id: add_match
 
         ScoreSheet:
             name: "score_sheet"

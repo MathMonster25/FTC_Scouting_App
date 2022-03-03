@@ -3,10 +3,10 @@ from kivymd.uix.screen import MDScreen
 class HomeScreen(MDScreen):
     pass
 
-class SelectTeam(MDScreen):
+class SelectMatch(MDScreen):
     pass
 
-class AddTeam(MDScreen):
+class AddMatch(MDScreen):
     pass
 
 class ScoreSheet(MDScreen):

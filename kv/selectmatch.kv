@@ -1,6 +1,6 @@
-<SelectTeam>:
+<SelectMatch>:
     MDRoundFlatButton:
-        text: "You are at the select team screen"
+        text: "You are at the select match screen"
 
         text_color: app.theme_cls.secondary_text_color
         line_color: app.theme_cls.accent_color
@@ -9,7 +9,7 @@
         pos_hint: {"center_x": 0.5, "center_y": 0.666}
 
         on_release:
-            app.change_screen("add_team")
+            app.change_screen("add_match")
 
     MDRoundFlatButton:
         text: "Go to the score sheet"

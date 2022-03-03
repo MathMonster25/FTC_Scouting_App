@@ -1,21 +1,16 @@
 from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.label import MDLabel
-from kivymd.uix.boxlayout import MDBoxLayout
 
-class IncrementValue(MDBoxLayout):
+from py_helpers.ScoringValue import ScoringValue
 
-    text = StringProperty()
+class IncrementValue(ScoringValue):
+
     value = NumericProperty(0)
     app = ObjectProperty()
 
-    def __init__(self, app=None, **kwargs):
-        super().__init__(**kwargs)
-        self.app = app
-
-        self.orientation = "horizontal"
-        self.padding = (5, 0)
-        self.adaptive_height = True
+    def __init__(self, app, **kwargs):
+        super().__init__(app, **kwargs)
 
         self.label = MDLabel()
         self.label.halign = "center"

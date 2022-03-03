@@ -1,6 +1,6 @@
 import os
 # When commented out, debug lines get printed
-#os.environ["KIVY_NO_CONSOLELOG"] = "1"
+os.environ["KIVY_NO_CONSOLELOG"] = "1"
 
 # Allows compiling for ios
 xyz = os.path.join('~', 'Documents', 'your_directory')
@@ -40,6 +40,7 @@ class MainApp(MDApp):
     autonomous = None
     teleop = None
     endgame = None
+    penalties = None
 
     score = 0
 
@@ -139,37 +140,31 @@ class MainApp(MDApp):
 
         auto = self.autonomous # type: AutonomousDropDown
         self.score += (
-                auto.high_goals.value * 12 +
-                auto.mid_goals.value * 6 +
-                auto.low_goals.value * 3 +
-                auto.power_shots.value1 * 15 +
-                auto.power_shots.value2 * 15 +
-                auto.power_shots.value3 * 15 +
-                auto.wobbles.value1 * 15 +
-                auto.wobbles.value2 * 15 +
-                auto.parked.value * 5
+                auto.duck.value * 10 +
+                auto.unit.value * 2 +
+                auto.hub.value * 6 +
+                auto.duck_bonus.value1 * 10 +
+                auto.duck_bonus.value2 * 10 +
+                auto.tse_bonus.value1 * 20 +
+                auto.tse_bonus.value2 * 20
         )
 
         tele = self.teleop # type: TeleOpDropDown
         self.score += (
-                tele.high_goals.value * 6 +
-                tele.mid_goals.value * 4 +
-                tele.low_goals.value * 2
+                tele.unit.value * 1 +
+                tele.shared.value * 4 +
+                tele.low.value * 2 +
+                tele.middle.value * 4 +
+                tele.high.value * 6
         )
 
         end = self.endgame # type: EndgameDropDown
         self.score += (
-                end.high_goals.value * 12 +
-                end.mid_goals.value * 6 +
-                end.low_goals.value * 3 +
-                end.power_shots.value1 * 15 +
-                end.power_shots.value2 * 15 +
-                end.power_shots.value3 * 15 +
-                end.wobbles_drop.value1 * 20 +
-                end.wobbles_drop.value2 * 20 +
-                end.wobbles_start.value1 * 5 +
-                end.wobbles_start.value2 * 5 +
-                end.wobble_rings.value * 5
+                end.ducks.value * 6 +
+                end.balanced.value * 10 +
+                end.tipped.value * 20 +
+                end.capped.value1 * 15 +
+                end.capped.value2 * 15
         )
 
         pen = self.penalties # type: PenaltiesDropDown
@@ -185,30 +180,16 @@ class MainApp(MDApp):
             return
 
         auto = self.autonomous  # type: AutonomousDropDown
-        auto.high_goals.reset()
-        auto.mid_goals.reset()
-        auto.low_goals.reset()
-        auto.power_shots.reset()
-        auto.wobbles.reset()
-        auto.parked.reset()
+        auto.reset()
 
         tele = self.teleop  # type: TeleOpDropDown
-        tele.high_goals.reset()
-        tele.mid_goals.reset()
-        tele.low_goals.reset()
+        tele.reset()
 
         end = self.endgame  # type: EndgameDropDown
-        end.high_goals.reset()
-        end.mid_goals.reset()
-        end.low_goals.reset()
-        end.power_shots.reset()
-        end.wobbles_drop.reset()
-        end.wobbles_start.reset()
-        end.wobble_rings.reset()
+        end.reset()
 
         pen = self.penalties # type: PenaltiesDropDown
-        pen.minors.reset()
-        pen.majors.reset()
+        pen.reset()
 
         self.score = 0
         self.root.ids.score_sheet.ids.score.text = "Score: " + str(self.score)
