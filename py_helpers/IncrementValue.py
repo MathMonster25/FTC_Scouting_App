@@ -40,8 +40,8 @@ class IncrementValue(ScoringValue):
         if self.app is not None:
             self.app.update_score()
 
-    def add(self):
-        self.value += 1
+    def add(self, value=1):
+        self.value += value
 
     def minus(self):
         if self.value > 0:

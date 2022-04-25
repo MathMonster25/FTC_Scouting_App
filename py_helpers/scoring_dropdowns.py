@@ -25,6 +25,9 @@ class ScoringDropDown(MDBoxLayout):
         for scoring in self.scoring_elements:
             scoring.reset()
 
+    def get_title(self):
+        return self.title
+
 class AutonomousDropDown(ScoringDropDown):
     title="Autonomous:"
 
@@ -33,7 +36,10 @@ class AutonomousDropDown(ScoringDropDown):
 
         self.duck = self.add_scoring(SingleCheckValue, "Duck Delivered")
         self.unit = self.add_scoring(IncrementValue, "In Storage Unit")
-        self.hub = self.add_scoring(IncrementValue, "In Shipping Hub")
+        #self.hub = self.add_scoring(IncrementValue, "In Shipping Hub")
+        self.low = self.add_scoring(IncrementValue, "On Level 1")
+        self.middle = self.add_scoring(IncrementValue, "On Level 2")
+        self.high = self.add_scoring(IncrementValue, "On Level 3")
         self.duck_bonus = self.add_scoring(DoubleCheckValue, "Duck Bonus")
         self.tse_bonus = self.add_scoring(DoubleCheckValue, "TSE Bonus")
 

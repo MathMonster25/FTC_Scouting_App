@@ -15,7 +15,7 @@ from kivy.core.window import Window
 from kivy.metrics import inch
 
 # Set window size to approx. size of iPhone XR (specific to Asus ROG G14 screen)
-#Window.size = (inch(828/326)*1.15, inch(1792/326)*1.15)
+Window.size = (inch(828/326)*1.15, inch(1792/326)*1.15)
 
 # KivyMD imports
 from kivymd.app import MDApp
@@ -41,6 +41,10 @@ class MainApp(MDApp):
     teleop = None
     endgame = None
     penalties = None
+
+    auto_low = 0
+    auto_middle = 0
+    auto_high = 0
 
     score = 0
 
@@ -72,6 +76,7 @@ class MainApp(MDApp):
                     panel_cls=MDExpansionPanelOneLine(text=dropdown.title)
                 )
             panel.bind(_state=self.rescroll)
+            panel.panel_cls.bind(text=dropdown.get_title)
             self.root.ids.score_sheet.ids.scoring_menu.add_widget(panel)
 
         penalty_panel = MDExpansionPanel(
@@ -95,7 +100,7 @@ class MainApp(MDApp):
 
         # Get the screen manager from the kv file
         screen_manager = self.root.ids['screen_manager'] # type: ScreenManager
-        if screen_name != "home_screen":
+        if screen_name != "score_sheet":
             self.prev_screens.append(screen_manager.current)
         else:
             self.prev_screens = []
@@ -104,7 +109,7 @@ class MainApp(MDApp):
         screen_manager.transition.direction = direction
         screen_manager.current = screen_name
 
-        if screen_name != "home_screen":
+        if screen_name != "score_sheet":
             self.root.ids.toolbar1.left_action_items = [["arrow-left-bold-circle", lambda x: self.move_back_screen()]]
         else:
             self.root.ids.toolbar1.left_action_items = [["menu"]]
@@ -124,7 +129,7 @@ class MainApp(MDApp):
         screen_manager.transition.direction = "right"
         screen_manager.current = screen_name
 
-        if screen_name != "home_screen":
+        if screen_name != "score_sheet":
             self.root.ids.toolbar1.left_action_items = [["arrow-left-bold-circle", lambda x: self.move_back_screen()]]
         else:
             self.root.ids.toolbar1.left_action_items = [["menu"]]
@@ -133,33 +138,44 @@ class MainApp(MDApp):
         self.root.ids.score_sheet.ids.scroll_view.scroll_to(self.root.ids.score_sheet.ids.scoring_menu)
 
     def update_score(self, *args):
-        if self.autonomous is None or self.teleop is None or self.endgame is None:
+        if self.autonomous is None or self.teleop is None or self.endgame is None or self.penalties is None:
             return
 
-        self.score = 0
-
         auto = self.autonomous # type: AutonomousDropDown
-        self.score += (
+        auto_score = (
                 auto.duck.value * 10 +
                 auto.unit.value * 2 +
-                auto.hub.value * 6 +
+                (auto.low.value + auto.middle.value + auto.high.value) * 6 +
                 auto.duck_bonus.value1 * 10 +
                 auto.duck_bonus.value2 * 10 +
                 auto.tse_bonus.value1 * 20 +
                 auto.tse_bonus.value2 * 20
         )
 
+        auto.title = "Autonomous: " + str(auto_score)
+
         tele = self.teleop # type: TeleOpDropDown
-        self.score += (
+
+        low_dif = auto.low.value - self.auto_low
+        middle_dif = auto.middle.value - self.auto_middle
+        high_dif = auto.high.value - self.auto_high
+
+        self.auto_low = auto.low.value
+        self.auto_middle = auto.middle.value
+        self.auto_high = auto.high.value
+
+        tele_score = (
                 tele.unit.value * 1 +
                 tele.shared.value * 4 +
-                tele.low.value * 2 +
-                tele.middle.value * 4 +
-                tele.high.value * 6
+                (tele.low.value + low_dif) * 2 +
+                (tele.middle.value + middle_dif) * 4 +
+                (tele.high.value + high_dif) * 6
         )
 
+        tele.title = "Tele-Op: " + str(tele_score)
+
         end = self.endgame # type: EndgameDropDown
-        self.score += (
+        end_score = (
                 end.ducks.value * 6 +
                 end.balanced.value * 10 +
                 end.tipped.value * 20 +
@@ -167,13 +183,23 @@ class MainApp(MDApp):
                 end.capped.value2 * 15
         )
 
+        end.title = "Endgame: " + str(end_score)
+
         pen = self.penalties # type: PenaltiesDropDown
-        self.score -= (
+        pen_score = (
             pen.minors.value * 10 +
             pen.majors.value * 30
         )
 
+        pen.title = "Penalties: " + str(-pen_score)
+
+        self.score = auto_score + tele_score + end_score - pen_score
+
         self.root.ids.score_sheet.ids.score.text = "Score: " + str(self.score)
+
+        tele.low.add(low_dif)
+        tele.middle.add(middle_dif)
+        tele.high.add(high_dif)
 
     def resetScore(self, *args):
         if self.autonomous is None or self.teleop is None or self.endgame is None:
@@ -181,6 +207,10 @@ class MainApp(MDApp):
 
         auto = self.autonomous  # type: AutonomousDropDown
         auto.reset()
+
+        self.auto_low = 0
+        self.auto_middle = 0
+        self.auto_high = 0
 
         tele = self.teleop  # type: TeleOpDropDown
         tele.reset()
